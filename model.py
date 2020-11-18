@@ -22,4 +22,14 @@ df_teams_2 = results[results['Team_2'].isin(teams)]
 df_teams = pd.concat((df_teams_1, df_teams_2))
 df_teams.drop_duplicates()
 df_teams = df_teams.drop(['date','Margin', 'Ground'], axis=1)
-print(df_teams)
+df_teams.loc[df_teams.Winner == df_teams.Team_1,'winning_team']=1
+df_teams.loc[df_teams.Winner == df_teams.Team_2, 'winning_team']=2
+df_teams = df_teams.drop(['Winner'], axis=1)
+
+X = df_teams.drop(['winning_team'], axis=1)
+Y = df_teams["winning_team"]
+
+
+
+
+
