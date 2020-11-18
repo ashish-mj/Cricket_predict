@@ -101,10 +101,14 @@ rf = RandomForestClassifier(n_estimators=100, max_depth=20, random_state=0)
 
 rf.fit(X_train, Y_train)
 
-print("Enter Teams from list")
+print("Enter Teams from list,If team name is 2 words use '_' for space ")
 print(teams)
 team1,team2=map(str,input().split())
+team1=team1.replace('_'," ")
+team2=team2.replace('_'," ")
+
 winner_predict = rf.predict([[teams_dict[team1],teams_dict[team2]]])
+
 if winner_predict[0]==1:
     print(team1)
 elif winner_predict[0]==2:
@@ -115,6 +119,7 @@ elif winner_predict[0]==4:
     print("tied")
 
 print(rf.score(X_test,Y_test))
+
 
 
 
