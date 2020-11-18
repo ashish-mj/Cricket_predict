@@ -7,7 +7,7 @@ Created on Wed Nov 18 16:46:29 2020
 """
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier
 
 
 teams = ['England', 'South Africa', 'West Indies', 
@@ -92,17 +92,29 @@ df = df_teams.reset_index()
 
 
 df_teams = df_teams.drop(['Winner'], axis=1)
-print(df_teams)
 X = df_teams.drop(['winning_team'], axis=1)
 Y = df_teams["winning_team"]
 
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y,random_state=0)
 
-knn = KNeighborsClassifier(n_neighbors=5)
+rf = RandomForestClassifier(n_estimators=100, max_depth=20, random_state=0) 
 
-knn.fit(X_train, Y_train)
+rf.fit(X_train, Y_train)
 
-print(knn.score(X_test,Y_test))
+print("Enter Teams from list")
+print(teams)
+team1,team2=map(str,input().split())
+winner_predict = rf.predict([[teams_dict[team1],teams_dict[team2]]])
+if winner_predict[0]==1:
+    print(team1)
+elif winner_predict[0]==2:
+    print(team2)
+elif winner_predict[0]==3:
+    print("no result")
+elif winner_predict[0]==4:
+    print("tied")
+
+print(rf.score(X_test,Y_test))
 
 
 
